@@ -49,8 +49,8 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
 
     private String getPrincipleClaimName(Jwt jwt) {
         String claimName = JwtClaimNames.SUB;
-        if (principleAttribute != null) {
-            claimName = principleAttribute;
+        if (this.principleAttribute != null) {
+            claimName = this.principleAttribute;
         }
         return jwt.getClaim(claimName);
     }
@@ -64,10 +64,10 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
         }
         resourceAccess = jwt.getClaim("resource_access");
 
-        if (resourceAccess.get(resourceId) == null) {
+        if (resourceAccess.get(this.resourceId) == null) {
             return Set.of();
         }
-        resource = (Map<String, Object>) resourceAccess.get(resourceId);
+        resource = (Map<String, Object>) resourceAccess.get(this.resourceId);
 
         resourceRoles = (Collection<String>) resource.get("roles");
 
