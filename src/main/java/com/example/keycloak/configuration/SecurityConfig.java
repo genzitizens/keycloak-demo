@@ -18,6 +18,13 @@ public class SecurityConfig {
     @Autowired
     private JwtConverter jwtConverter;
 
+// * Step	
+// * 1. CSRF                    Disabled because JWT makes CSRF irrelevant
+// * 2. Authorization           All endpoints require authentication
+// * 3. Token Decoding	        Spring parses JWT from Authorization: Bearer ...
+// * 4. Custom Converter	JwtConverter maps claims into Authentication
+// * 5. Session	                No session created — API is fully stateless
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
