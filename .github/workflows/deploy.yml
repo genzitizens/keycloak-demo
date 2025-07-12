@@ -1,0 +1,20 @@
+# File: my-app/.github/workflows/deploy.yml
+
+name: Test CICD of SpringBoot App
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  java-ci:
+    uses: genzitizens/ci-templates/.github/workflows/java-ci.yml@main
+    secrets:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+  
+  sonarcloud:
+    needs: java-ci
+    uses: genzitizens/ci-templates/.github/workflows/sonarcloud.yml@main
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
