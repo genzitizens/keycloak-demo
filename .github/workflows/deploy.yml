@@ -1,20 +1,31 @@
-# File: my-app/.github/workflows/deploy.yml
-
-name: Test CICD of SpringBoot App
+name: Deploy Application
 
 on:
   push:
     branches: [main]
 
 jobs:
-  java-ci:
-    uses: genzitizens/ci-templates/.github/workflows/java-ci.yml@main
+  push-ghcr:
+    uses: genzitizens/ci-templates/.github/workflows/push-to-ghcr.yml@main
+    with:
+      image_name: keycloak-demo
     secrets:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-  
-  sonarcloud:
-    needs: java-ci
-    uses: genzitizens/ci-templates/.github/workflows/sonarcloud.yml@main
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+      GHCR_ORG: ${{ secrets.GHCR_ORG }}
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+
+  deploy:
+    needs: push-ghcr
+    uses: genzitizens/ci-templates/.github/workflows/deploy-to-vps.yml@main
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+      GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      GHCR_ORG: ${{ secrets.GHCR_ORG }}
+
+    with:
+      IMAGE_NAME: "keycloak-demo"
+      COMPOSE_PATH: "/home/exeltan/keycloak-demo/docker-compose.yml"
