@@ -1,5 +1,5 @@
-# Use Liberica or OpenJDK base image for Java 21 (as you're using Liberica JDK 21)
-FROM bellsoft/liberica-runtime-container:jre-21
+# Option: switch to Eclipse Temurin base image
+FROM eclipse-temurin:21-jre
 
 # Set environment variables
 ENV SPRING_PROFILES_ACTIVE=prod
