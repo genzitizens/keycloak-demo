@@ -6,7 +6,7 @@ on:
 
 jobs:
   push-ghcr:
-    uses: genzitizens/ci-templates/.github/workflows/push-to-ghcr.yml@main
+    uses: genzitizens/ci-templates/.github/workflows/springboot-push-to-ghcr.yml@main
     with:
       image_name: keycloak-demo
     secrets:
