@@ -16,6 +16,7 @@ public class UserController {
         return ResponseEntity.ok("List of users");
     }
 
+    @PostMapping
     @PreAuthorize("hasRole('role_admin')")
     public ResponseEntity<String> getAdminUsers() {
         return ResponseEntity.ok("List of admin users");
