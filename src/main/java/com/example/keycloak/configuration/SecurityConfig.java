@@ -32,12 +32,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         (authorize) -> authorize.anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(
-                        (oauth2) -> oauth2.jwt(
-                                jwt -> jwt.jwtAuthenticationConverter(jwtConverter)
+                .oauth2ResourceServer(                                              // * Configures Spring Boot app to act as a Resource Server 
+                        (oauth2) -> oauth2.jwt(                                     // * Specifies that JWT tokens are used for authentication.
+                                jwt -> jwt.jwtAuthenticationConverter(jwtConverter) // * : Tells Spring how to convert the JWT into a JwtAuthenticationToken, which Spring Security uses for authorization.
                         )
                 )
-                .sessionManagement(
+                .sessionManagement( // * tells the Security Config to be stateless and not save any Tokens 
                         session -> session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
                         )
