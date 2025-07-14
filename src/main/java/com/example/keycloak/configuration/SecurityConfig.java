@@ -41,6 +41,7 @@ public class SecurityConfig {
                         (oauth2) -> oauth2.jwt(                                     // * Specifies that JWT tokens are used for authentication.
 
                                 // * Converts the JWT using JwtConverter bean (to include roles and principal)
+                                // * Uses the JwtConverter Component declared on component folder on how to handle JWT Tokens per each request
                                 jwt -> jwt.jwtAuthenticationConverter(jwtConverter) // * : Tells Spring how to convert the JWT into a JwtAuthenticationToken, which Spring Security uses for authorization.
 
                         )
