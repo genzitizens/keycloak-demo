@@ -22,7 +22,7 @@ It supports:
 ### Step 1: Start Keycloak (Dev Mode)
 
 ```bash
-docker compose -f docker-compose.dev.yml up -d
+docker compose up -d
 ```
 
 This will:
@@ -120,7 +120,7 @@ Never commit production values to source code – always pass them via environme
 ## Cleanup Local Dev Environment
 
 ```bash
-docker compose -f docker-compose.dev.yml down -v
+docker compose down -v
 ```
 
 ---
