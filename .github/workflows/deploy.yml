@@ -5,7 +5,16 @@ on:
     branches: [main]
 
 jobs:
+  sonarcloud:
+    uses: genzitizens/ci-templates/.github/workflows/sonarcloud.yml@main
+    with:
+      projectBaseDir: "." # optional if using default
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+
   push-ghcr:
+    needs: sonarcloud
     uses: genzitizens/ci-templates/.github/workflows/springboot-push-to-ghcr.yml@main
     with:
       image_name: keycloak-demo
