@@ -7,12 +7,12 @@ on:
 jobs:
 
   codeql-scan:
-    uses: genzitizens/ci-templates/.github/workflows/codeql-scan.yml@main
+    uses: genzitizens/ci-templates/.github/workflows/codeql-java.yml@main
     with:
-      languages: '["java"]'
-      codeql-cfg-path: ".github/codeql-config.yml" # optional
       build-command: |
         ./mvnw clean install
+      codeql-cfg-path: ".github/codeql-config.yml"
+      jdk-version: "21"
 
   sonarcloud-scan:
     uses: genzitizens/ci-templates/.github/workflows/sonarcloud.yml@main
@@ -34,7 +34,7 @@ jobs:
       GHCR_ORG: ${{ secrets.GHCR_ORG }}
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 
-  LIVE-Deployment:
+  Deployment:
     needs: containerizing
     uses: genzitizens/ci-templates/.github/workflows/deploy-to-vps.yml@main
     secrets:
