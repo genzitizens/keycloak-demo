@@ -5,7 +5,16 @@ on:
     branches: [main]
 
 jobs:
-  sonarcloud:
+
+  codeql-scan:
+    uses: genzitizens/ci-templates/.github/workflows/codeql.yml@main
+    with:
+      languages: '["java"]'
+      codeql-cfg-path: ".github/codeql-config.yml" # optional
+      build-command: |
+        ./mvnw clean install
+
+  sonarcloud-scan:
     uses: genzitizens/ci-templates/.github/workflows/sonarcloud.yml@main
     with:
       projectBaseDir: "." # optional if using default
@@ -13,8 +22,10 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 
-  push-ghcr:
-    needs: sonarcloud
+  containerizing:
+    needs: 
+      - sonarcloud-scan
+      - codeql-scan
     uses: genzitizens/ci-templates/.github/workflows/springboot-push-to-ghcr.yml@main
     with:
       image_name: keycloak-demo
@@ -23,7 +34,7 @@ jobs:
       GHCR_ORG: ${{ secrets.GHCR_ORG }}
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 
-  deploy:
+  LIVE-Deployment:
     needs: push-ghcr
     uses: genzitizens/ci-templates/.github/workflows/deploy-to-vps.yml@main
     secrets:
