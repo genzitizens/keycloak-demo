@@ -7,7 +7,7 @@ on:
 jobs:
 
   codeql-scan:
-    uses: genzitizens/ci-templates/.github/workflows/codeql-java.yml@main
+    uses: genzitizens/ci-templates/.github/workflows/java-codeql-scan.yml@main
     with:
       build-command: |
         ./mvnw clean install
