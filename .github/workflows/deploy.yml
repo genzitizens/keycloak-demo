@@ -35,7 +35,7 @@ jobs:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 
   LIVE-Deployment:
-    needs: push-ghcr
+    needs: containerizing
     uses: genzitizens/ci-templates/.github/workflows/deploy-to-vps.yml@main
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
